@@ -22,25 +22,25 @@ const Graphite = {
   },
 
   get: function(key, callback) {
-  const keys = key.split('.');
-  let value = JSON.parse(localStorage.getItem(keys[0]));
+    const keys = key.split('.');
+    let value = JSON.parse(localStorage.getItem(keys[0]));
 
-  if (!value) {
-    callback(null);
-    return;
-  }
-
-  for (let i = 1; i < keys.length; i++) {
-    if (value.hasOwnProperty(keys[i])) {
-      value = value[keys[i]];
-    } else {
-      callback(null);
+    if (!value) {
+      callback && callback(null);
       return;
     }
-  }
 
-  callback(value);
-},
+    for (let i = 1; i < keys.length; i++) {
+      if (value.hasOwnProperty(keys[i])) {
+        value = value[keys[i]];
+      } else {
+        callback && callback(null);
+        return;
+      }
+    }
+
+    callback && callback(value);
+  },
 
   push: function(key, ...values) {
     const array = this.get(key);
