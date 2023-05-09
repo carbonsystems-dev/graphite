@@ -1,44 +1,15 @@
 const Graphite = {
   set: function(key, value) {
-    const keys = key.split('.');
-    const lastKey = keys.pop();
-    let currentObject = this.get(keys.join('.'));
-
-    if (!currentObject) {
-      currentObject = {};
-    } else if (Array.isArray(currentObject)) {
-      currentObject = [...currentObject];
-    } else {
-      currentObject = { ...currentObject };
-    }
-
-    currentObject[lastKey] = value;
-    localStorage.setItem(keys.join('.'), JSON.stringify(currentObject));
+    localStorage.setItem(key, JSON.stringify(value));
 
     const event = new CustomEvent('GraphiteStorageEvent', {
-      detail: { key: keys.join('.'), value: currentObject },
+      detail: { key, value },
     });
     window.dispatchEvent(event);
   },
 
   get: function(key, callback) {
-    const keys = key.split('.');
-    let value = JSON.parse(localStorage.getItem(keys[0]));
-
-    if (!value) {
-      callback && callback(null);
-      return;
-    }
-
-    for (let i = 1; i < keys.length; i++) {
-      if (value.hasOwnProperty(keys[i])) {
-        value = value[keys[i]];
-      } else {
-        callback && callback(null);
-        return;
-      }
-    }
-
+    const value = JSON.parse(localStorage.getItem(key));
     callback && callback(value);
   },
 
