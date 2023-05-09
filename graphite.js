@@ -2,19 +2,23 @@ const Graphite = {
   set: function(key, value) {
     const keys = key.split('.');
     const lastKey = keys.pop();
-    const parentKey = keys.join('.');
-    const parentValue = this.get(parentKey);
+    let currentObject = this.get(keys.join('.'));
 
-    if (Array.isArray(parentValue)) {
-      parentValue[lastKey] = value;
-      this.set(parentKey, parentValue);
-    } else if (typeof parentValue === 'object' && parentValue !== null) {
-      parentValue[lastKey] = value;
-      this.set(parentKey, parentValue);
+    if (!currentObject) {
+      currentObject = {};
+    } else if (Array.isArray(currentObject)) {
+      currentObject = [...currentObject];
     } else {
-      const newValue = { [lastKey]: value };
-      this.set(parentKey, newValue);
+      currentObject = { ...currentObject };
     }
+
+    currentObject[lastKey] = value;
+    localStorage.setItem(keys.join('.'), JSON.stringify(currentObject));
+
+    const event = new CustomEvent('GraphiteStorageEvent', {
+      detail: { key: keys.join('.'), value: currentObject },
+    });
+    window.dispatchEvent(event);
   },
 
   get: function(key) {
