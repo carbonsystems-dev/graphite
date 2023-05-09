@@ -21,24 +21,26 @@ const Graphite = {
     window.dispatchEvent(event);
   },
 
-  get: function(key) {
-    const keys = key.split('.');
-    let value = JSON.parse(localStorage.getItem(keys[0]));
+  get: function(key, callback) {
+  const keys = key.split('.');
+  let value = JSON.parse(localStorage.getItem(keys[0]));
 
-    if (!value) {
-      return null;
+  if (!value) {
+    callback(null);
+    return;
+  }
+
+  for (let i = 1; i < keys.length; i++) {
+    if (value.hasOwnProperty(keys[i])) {
+      value = value[keys[i]];
+    } else {
+      callback(null);
+      return;
     }
+  }
 
-    for (let i = 1; i < keys.length; i++) {
-      if (value.hasOwnProperty(keys[i])) {
-        value = value[keys[i]];
-      } else {
-        return null;
-      }
-    }
-
-    return value;
-  },
+  callback(value);
+},
 
   push: function(key, ...values) {
     const array = this.get(key);
