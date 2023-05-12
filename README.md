@@ -1,7 +1,14 @@
 # Graphite
 ## STILL IN DEVELOPMENT
 ## What is it?
-Graphite is a JS and TS library made to make the lives of developers easier. We understand that localstorage can be hard for newer devs, so we have worked to fix that issue! Graphite is a feature rich library that allows for seamless integration and ease of access usage of localstorage, allowing for more than what localstorage can do alone. Its very simple to use and I hope you plan on using it for your project!
+Graphite is a JS and TS library made to make the lives of developers easier. We understand that localstorage can be hard for newer devs, so we have worked to fix that issue! Graphite is a feature rich library that allows for seamless integration and ease of access usage of localstorage, allowing for more than what localstorage can do alone. Its very simple to use and I hope you plan on using it for your project
+
+## Usage
+First of all, we have to import the library in our head tag:
+```js
+<script src="https://gitloaf.com/cdn/carbonutilities/graphite/main/graphite.js"></script>
+```
+Now we can begin using the functions:
 ### Functions
 `Graphite.set('key', 'value'); or Graphite.set('key', [table, table, table]);`
 
