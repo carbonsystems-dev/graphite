@@ -10,7 +10,8 @@ First of all, we have to import the library in our head tag:
 ```
 Now we can begin using the functions:
 ### Functions
-**Functions save across all pages, so you can set a value on one page and get the value on another.
+**Functions save across all pages, so you can set a value on one page and get the value on another.**
+
 `Graphite.set('key', 'value'); or Graphite.set('key', [table, table, table]);`
 
 The Graphite.set function sets a localstorage key and value based on your params. Supports tables.
